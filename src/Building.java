@@ -12,12 +12,6 @@ public class Building extends ArrayList<ArrayList<Person>> {
         this.maxPeoplePerFloor = maxPeoplePerFloor;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder building = new StringBuilder();
-        
-    }
-
     public static Building generateBuilding(int floorAmount, int maxPeoplePerFloor) {
         Building building = new Building(floorAmount, maxPeoplePerFloor);
         Random random = new Random();
