@@ -18,6 +18,15 @@ public class Building extends ArrayList<Building.Floor> {
     }
 
     @Override
+    public boolean isEmpty() {
+        for (Floor floor : this){
+            if(!floor.isEmpty()){
+                return false;
+            }
+        } return true;
+    }
+
+    @Override
     public String toString() {
 
         StringBuilder result = new StringBuilder();
@@ -27,6 +36,7 @@ public class Building extends ArrayList<Building.Floor> {
 
         return result.toString();
     }
+
 
     class Floor extends ArrayList<Person> {
 
@@ -53,33 +63,40 @@ public class Building extends ArrayList<Building.Floor> {
         public String toString() {
             StringBuilder result = new StringBuilder();
             for(Person p : this){
-                result.append(p).append(" ");
+                result.append(p);
             }
-            return String.format("Floor#%d: [%s]", this.current, result.toString().trim());
+            return String.format("#%d: [%s]", this.current, result.toString());
         }
 
         public int getCurrent() { return current; }
 
     }
 
+
     class Elevator extends ArrayList<Person>{
 
         private static final int MAX_CAPACITY = 5;
         private int currentFloor;
+        private boolean isGoingUp;
 
         public Elevator(){
             this.currentFloor = 1;
+            this.isGoingUp = true;
         }
 
         public void moveUp(){
             if(this.currentFloor < height){
                 this.currentFloor++;
+            } else {
+                this.isGoingUp = false;
             }
         }
 
         public void moveDown(){
             if(this.currentFloor > 1){
                 this.currentFloor--;
+            } else {
+                this.isGoingUp = true;
             }
         }
 
@@ -92,13 +109,16 @@ public class Building extends ArrayList<Building.Floor> {
             return false;
         }
 
+        public boolean isGoingUp(){ return isGoingUp; }
+        public int getCurrent(){ return currentFloor; }
+
         @Override
         public String toString() {
             StringBuilder result = new StringBuilder();
             for (Person p : this){
                 result.append(p);
             }
-            return String.format("eFloor#%d: [%s]", this.currentFloor, result);
+            return String.format("Elevator: [%s] ", result);
         }
     }
 }

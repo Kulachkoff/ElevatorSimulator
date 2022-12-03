@@ -10,9 +10,10 @@ public class Person {
     }
 
     public boolean isGoingUp() { return isGoingUp; }
+    public int getDestinationFloor() { return  destinationFloor; }
 
     @Override
     public String toString() {
-        return String.format("(%d, %b)",destinationFloor, isGoingUp);
+        return String.format("(%d)",destinationFloor);
     }
 }
