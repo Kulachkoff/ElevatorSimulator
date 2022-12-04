@@ -14,6 +14,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return String.format("(%d)",destinationFloor);
+        return String.format("(%d)", destinationFloor);
     }
 }

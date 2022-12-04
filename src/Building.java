@@ -5,35 +5,35 @@ public class Building extends ArrayList<Building.Floor> {
     private int height;
     private int maxPeoplePerFloor;
 
-    public Building(int height, int maxPeoplePerFloor){
+    public Building(int height, int maxPeoplePerFloor) {
         this.height = height;
         generateBuilding(this, height, maxPeoplePerFloor);
     }
 
-    public void generateBuilding(Building building, int buildingHeight, int maxPeoplePerFloor){
+    public void generateBuilding(Building building, int buildingHeight, int maxPeoplePerFloor) {
 
-        for (int i = 0; i < buildingHeight; i++){
+        for (int i = 0; i < buildingHeight; i++) {
             building.add(new Floor(maxPeoplePerFloor));
         }
     }
 
     @Override
     public boolean isEmpty() {
-        for (Floor floor : this){
-            if(!floor.isEmpty()){
+        for (Floor floor : this) {
+            if (!floor.isEmpty()) {
                 return false;
             }
-        } return true;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
 
         StringBuilder result = new StringBuilder();
-        for (Floor floor : this){
+        for (Floor floor : this) {
             result.append(floor).append("\n");
         }
-
         return result.toString();
     }
 
@@ -48,11 +48,13 @@ public class Building extends ArrayList<Building.Floor> {
             fill(this, maxPeople);
         }
 
-        private void fill(Floor floor, int maxPeople){
+        private void fill(Floor floor, int maxPeople) {
             Random random = new Random();
-            for (int i = 0; i < random.nextInt(maxPeople); i++){
+
+            for (int i = 0; i < random.nextInt(maxPeople); i++) {
                 int randomDestination = random.nextInt(height) + 1;
-                while (floor.current == randomDestination){
+
+                while (floor.current == randomDestination) {
                     randomDestination = random.nextInt(height) + 1;
                 }
                 floor.add(new Person(this.current, randomDestination));
@@ -62,38 +64,38 @@ public class Building extends ArrayList<Building.Floor> {
         @Override
         public String toString() {
             StringBuilder result = new StringBuilder();
-            for(Person p : this){
+
+            for (Person p : this) {
                 result.append(p);
             }
             return String.format("#%d: [%s]", this.current, result.toString());
         }
 
         public int getCurrent() { return current; }
-
     }
 
 
-    class Elevator extends ArrayList<Person>{
+    class Elevator extends ArrayList<Person> {
 
         private static final int MAX_CAPACITY = 5;
         private int currentFloor;
         private boolean isGoingUp;
 
-        public Elevator(){
+        public Elevator() {
             this.currentFloor = 1;
             this.isGoingUp = true;
         }
 
-        public void moveUp(){
-            if(this.currentFloor < height){
+        public void moveUp() {
+            if (this.currentFloor < height) {
                 this.currentFloor++;
             } else {
                 this.isGoingUp = false;
             }
         }
 
-        public void moveDown(){
-            if(this.currentFloor > 1){
+        public void moveDown() {
+            if (this.currentFloor > 1) {
                 this.currentFloor--;
             } else {
                 this.isGoingUp = true;
@@ -102,20 +104,20 @@ public class Building extends ArrayList<Building.Floor> {
 
         @Override
         public boolean add(Person person) {
-            if (this.size() < MAX_CAPACITY)
-            {
+            if (this.size() < MAX_CAPACITY) {
                 return super.add(person);
             }
             return false;
         }
 
-        public boolean isGoingUp(){ return isGoingUp; }
-        public int getCurrent(){ return currentFloor; }
+        public boolean isGoingUp() { return isGoingUp; }
+        public int getCurrent() { return currentFloor; }
+        public boolean hasSpace() { return this.size() < MAX_CAPACITY; }
 
         @Override
         public String toString() {
             StringBuilder result = new StringBuilder();
-            for (Person p : this){
+            for (Person p : this) {
                 result.append(p);
             }
             return String.format("Elevator: [%s] ", result);
